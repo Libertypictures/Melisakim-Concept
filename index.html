@@ -39,6 +39,7 @@
         --charcoal: #2b2823;
         --black: #141210;
         --warm-gray: #8c8577;
+        --pink: #c98da0;
         --line: rgba(20,18,16,0.10);
         --nav-bg: rgba(250,247,242,0.92);
     }
@@ -77,20 +78,15 @@
     .nav.is-stuck { box-shadow: 0 4px 16px rgba(20,18,16,0.06); }
     .nav-row { display: flex; align-items: center; justify-content: space-between; padding: 26px 5vw; transition: padding 0.3s ease; }
     .nav.is-stuck .nav-row { padding-top: 16px; padding-bottom: 16px; }
-    .nav-mark { font-family: 'Playfair Display', serif; font-size: 19px; letter-spacing: 2.5px; text-transform: uppercase; white-space: nowrap; }
+    .nav-mark { font-family: 'Playfair Display', serif; font-size: 15px; letter-spacing: 1.8px; text-transform: uppercase; white-space: nowrap; }
     .nav-links { display: flex; gap: 32px; font-size: 12px; letter-spacing: 0.5px; }
     .nav-links a { color: var(--charcoal); text-decoration: none; opacity: 0.72; transition: opacity 0.25s; }
     .nav-links a:hover { opacity: 1; }
     .nav-icons { display: flex; gap: 22px; font-size: 12px; align-items: center; color: var(--charcoal); }
+    .wishlist-link { display: inline-flex; align-items: center; gap: 5px; }
+    .heart-icon { color: var(--pink); flex-shrink: 0; }
     .search-pill { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 30px; padding: 9px 18px; font-size: 12px; color: var(--warm-gray); max-width: 260px; }
-
-    .hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 32px; height: 32px; background: none; border: none; cursor: pointer; padding: 0; }
-    .hamburger span { display: block; width: 100%; height: 1px; background: var(--charcoal); }
-
-    .mobile-menu { position: fixed; inset: 0; background: var(--ivory); z-index: 50; display: none; flex-direction: column; padding: 30px 8vw; gap: 26px; overflow-y: auto; }
-    .mobile-menu.is-open { display: flex; }
-    .mobile-menu a { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--charcoal); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
-    .mobile-menu-close { align-self: flex-end; background: none; border: none; font-size: 32px; color: var(--charcoal); cursor: pointer; line-height: 1; margin-bottom: 10px; }
+    .search-short { display: none; }
 
     /* HERO */
     .hero { position: relative; height: 94vh; min-height: 620px; display: flex; align-items: flex-end; overflow: hidden; }
@@ -155,7 +151,7 @@
     .stylist-mock { background: var(--warm-white); padding: 30px; }
     .stylist-mock-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 18px; }
     .chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
-    .chat-bubble.user { background: var(--gold); color: var(--warm-white); margin-left: auto; border-bottom-right-radius: 3px; }
+    .chat-bubble.user { background: var(--pink); color: var(--warm-white); margin-left: auto; border-bottom-right-radius: 3px; }
     .chat-bubble.stylist { background: var(--cream); color: var(--black); border-bottom-left-radius: 3px; }
 
     /* BOOK YOUR APPOINTMENT — CALENDAR */
@@ -164,19 +160,19 @@
     .calendar-month { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--black); }
     .calendar-nav { display: flex; gap: 10px; }
     .calendar-nav button { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--black); cursor: pointer; font-size: 13px; transition: border-color 0.25s; }
-    .calendar-nav button:hover { border-color: var(--gold); }
+    .calendar-nav button:hover { border-color: var(--pink); }
     .calendar-weekdays, .calendar-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
     .calendar-weekdays span { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--warm-gray); padding-bottom: 10px; }
     .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; border-radius: 50%; cursor: pointer; color: var(--black); transition: background 0.25s, color 0.25s; }
     .calendar-day:hover:not(.is-disabled):not(.is-selected) { background: var(--cream); }
     .calendar-day.is-disabled { color: var(--warm-gray); opacity: 0.35; cursor: default; }
-    .calendar-day.is-selected { background: var(--gold); color: var(--warm-white); }
+    .calendar-day.is-selected { background: var(--pink); color: var(--warm-white); }
     .calendar-day.is-empty { visibility: hidden; }
 
     .time-slots { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 24px; }
     .time-slot { padding: 9px 16px; border: 1px solid var(--line); border-radius: 30px; font-size: 12px; color: var(--black); background: none; cursor: pointer; transition: border-color 0.25s, background 0.25s; }
-    .time-slot:hover { border-color: var(--gold); }
-    .time-slot.is-selected { background: var(--gold); border-color: var(--gold); color: var(--warm-white); }
+    .time-slot:hover { border-color: var(--pink); }
+    .time-slot.is-selected { background: var(--pink); border-color: var(--pink); color: var(--warm-white); }
 
     .calendar-confirm { width: 100%; padding: 15px; background: var(--black); color: var(--warm-white); border: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: opacity 0.3s; }
     .calendar-confirm:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -222,8 +218,14 @@
     .whatsapp-float { position: fixed; bottom: 26px; right: 26px; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.2); z-index: 40; font-size: 26px; color: #fff; }
 
     @media (max-width: 960px) {
-        .nav-links, .search-pill, .icon-only { display: none; }
-        .hamburger { display: flex; }
+        .nav-row { flex-wrap: wrap; justify-content: center; row-gap: 12px; padding: 16px 4vw; }
+        .nav-mark { order: 1; width: 100%; text-align: center; font-size: 13px; letter-spacing: 1.4px; }
+        .nav-links { order: 2; gap: 14px; font-size: 10px; }
+        .nav-icons { order: 3; gap: 14px; font-size: 10px; }
+        .search-pill { padding: 6px 12px; max-width: none; }
+        .search-full { display: none; }
+        .search-short { display: inline; }
+        .nav.is-stuck .nav-row { padding-top: 12px; padding-bottom: 12px; }
         .founder { grid-template-columns: 1fr; }
         .occasion-grid { grid-template-columns: repeat(2, 1fr); }
         .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -233,6 +235,9 @@
 
     @media (max-width: 600px) {
         .section-wrap { padding: 90px 6vw; }
+        .nav-links, .nav-icons { gap: 10px; font-size: 9px; }
+        .search-pill { padding: 5px 10px; font-size: 9px; }
+        .icon-only { font-size: 9px; }
         .occasion-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .occasion-label { font-size: 14px; bottom: 12px; }
         .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -248,32 +253,17 @@
 <nav class="nav" id="site-nav">
     <div class="nav-row">
         <div class="nav-links">
-            <a href="#">Designers</a>
-            <a href="#">Bags</a>
-            <a href="#">Shoes</a>
-            <a href="#">Jewelry</a>
+            <a href="#the-edit">New Arrivals</a>
+            <a href="#">Deals</a>
         </div>
         <div class="nav-mark">Melisakim Clothing</div>
         <div class="nav-icons">
-            <div class="search-pill">Search by designer, category, or color</div>
-            <span class="icon-only">Wishlist</span>
+            <div class="search-pill"><span class="search-full">Search by designer, category, or color</span><span class="search-short">Search</span></div>
+            <span class="icon-only wishlist-link"><svg class="heart-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.9-10-9.3C.5 8.4 2 4.5 5.8 4c2.2-.3 4.2.9 6.2 3.4C14 4.9 16 3.7 18.2 4c3.8.5 5.3 4.4 3.8 7.7C19.5 16.1 12 21 12 21z"/></svg>Wishlist</span>
             <span class="icon-only">Bag (0)</span>
-            <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
         </div>
     </div>
 </nav>
-
-<div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">&times;</button>
-    <a href="#">Designers</a>
-    <a href="#">Bags</a>
-    <a href="#">Shoes</a>
-    <a href="#">Jewelry</a>
-    <a href="#">Wishlist</a>
-    <a href="#">Bag (0)</a>
-</div>
 
 <section class="hero">
     <div class="ph">Storefront / Selection Photography</div>
@@ -288,16 +278,15 @@
 
 <div id="occasion" class="section-wrap fade-in">
     <div class="section-head">
-        <div class="section-eyebrow">Shop by Designer</div>
-        <h2 class="section-title serif">Every house we carry, in one place.</h2>
+        <div class="section-eyebrow">Shop by Category</div>
+        <h2 class="section-title serif">Browse the full selection.</h2>
     </div>
     <div class="occasion-grid">
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">House 01</div></div>
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">House 02</div></div>
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">House 03</div></div>
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">House 04</div></div>
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Bags</div></div>
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Purses</div></div>
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Jewelry</div></div>
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Shoes</div></div>
     </div>
-    <p style="text-align:center; font-size:11px; color:var(--warm-gray); margin-top:24px;">Placeholder tiles — swap in the actual houses you carry once confirmed.</p>
 </div>
 
 <div id="the-edit" class="section-wrap tight fade-in">
@@ -306,14 +295,14 @@
         <h2 class="section-title serif">Available now.</h2>
     </div>
     <div class="catalog-grid">
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div><span class="new-badge">New</span></div><p class="catalog-brand">Designer House</p><h4 class="serif">Structured Tote</h4><p class="price">₦1,850,000</p></div>
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><h4 class="serif">Quilted Crossbody</h4><p class="price">₦2,400,000</p></div>
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><h4 class="serif">Monogram Slides</h4><p class="price">₦680,000</p></div>
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div><span class="new-badge">New</span></div><p class="catalog-brand">Designer House</p><h4 class="serif">Layered Gold Necklace</h4><p class="price">₦950,000</p></div>
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><h4 class="serif">Leather Ankle Boot</h4><p class="price">₦1,100,000</p></div>
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><h4 class="serif">Signature Belt Bag</h4><p class="price">₦1,600,000</p></div>
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><h4 class="serif">Pearl Drop Earrings</h4><p class="price">₦520,000</p></div>
-        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><h4 class="serif">Silk Scarf</h4><p class="price">₦380,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div><span class="new-badge">New</span></div><p class="catalog-brand">Designer House</p><p class="price">₦1,850,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><p class="price">₦2,400,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><p class="price">₦680,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div><span class="new-badge">New</span></div><p class="catalog-brand">Designer House</p><p class="price">₦950,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><p class="price">₦1,100,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><p class="price">₦1,600,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><p class="price">₦520,000</p></div>
+        <div class="feature-card catalog-card fade-in"><div class="feature-frame"><div class="ph">Product</div></div><p class="catalog-brand">Designer House</p><p class="price">₦380,000</p></div>
     </div>
 </div>
 
@@ -422,23 +411,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, { threshold: 0.15 });
     els.forEach(function (el) { observer.observe(el); });
-
-    var hamburgerBtn = document.getElementById('hamburger-btn');
-    var mobileMenu = document.getElementById('mobile-menu');
-    var closeBtn = document.getElementById('mobile-menu-close');
-    function openMenu() {
-        mobileMenu.classList.add('is-open');
-        hamburgerBtn.setAttribute('aria-expanded', 'true');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeMenu() {
-        mobileMenu.classList.remove('is-open');
-        hamburgerBtn.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-    }
-    if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMenu);
-    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-    mobileMenu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
 
     var nav = document.getElementById('site-nav');
     window.addEventListener('scroll', function () {
