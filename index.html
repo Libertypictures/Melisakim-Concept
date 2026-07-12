@@ -112,21 +112,23 @@
     .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.2vw, 40px); font-weight: 400; }
 
     /* OCCASION GRID */
-    .occasion-stack { display: flex; flex-direction: column; gap: 36px; max-width: 720px; margin: 0 auto; }
-    .occasion-panel { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+    .occasion-stack { display: flex; flex-direction: column; gap: 36px; max-width: 420px; margin: 0 auto; }
+    .occasion-panel { position: relative; aspect-ratio: 3/4; overflow: hidden; }
     .occasion-panel .ph { transition: transform 0.9s cubic-bezier(0.16,1,0.3,1); }
     .occasion-panel:hover .ph { transform: scale(1.05); }
     .occasion-label { position: absolute; left: 0; right: 0; bottom: 26px; text-align: center; color: var(--warm-white); font-family: 'Playfair Display', serif; font-style: italic; font-size: 26px; z-index: 2; }
     .occasion-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,18,16,0.55), transparent 50%); z-index: 1; }
 
     /* FEATURED CATEGORIES — horizontal scroll */
-    .catalog-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    .catalog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 32px; max-width: 720px; margin: 0 auto; }
     .catalog-card:nth-child(1) { transition-delay: 0s; } .catalog-card:nth-child(2) { transition-delay: 0.06s; } .catalog-card:nth-child(3) { transition-delay: 0.12s; } .catalog-card:nth-child(4) { transition-delay: 0.18s; } .catalog-card:nth-child(5) { transition-delay: 0.24s; } .catalog-card:nth-child(6) { transition-delay: 0.3s; } .catalog-card:nth-child(7) { transition-delay: 0.36s; } .catalog-card:nth-child(8) { transition-delay: 0.42s; }
     .catalog-frame { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--cream); margin-bottom: 14px; }
     .catalog-frame .ph { transition: transform 0.7s cubic-bezier(0.16,1,0.3,1); }
     .catalog-card:hover .catalog-frame .ph { transform: scale(1.06); }
     .catalog-new-badge { position: absolute; top: 12px; left: 12px; z-index: 2; color: var(--warm-white); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
-    .catalog-actions { position: absolute; top: 10px; right: 10px; z-index: 2; display: flex; flex-direction: column; gap: 8px; }
+    .catalog-actions { position: absolute; top: 10px; right: 10px; z-index: 2; display: flex; flex-direction: column; gap: 8px; opacity: 0; transform: translateX(6px); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; }
+    .catalog-card.actions-visible .catalog-actions { opacity: 1; transform: translateX(0); pointer-events: auto; }
+    .catalog-frame { cursor: pointer; }
     .catalog-action-btn { width: 32px; height: 32px; border-radius: 50%; background: rgba(253,251,247,0.92); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--charcoal); transition: transform 0.2s ease, background 0.2s ease; padding: 0; }
     .catalog-action-btn:hover { background: var(--warm-white); }
     .catalog-action-btn:active { transform: scale(0.9); }
@@ -211,10 +213,11 @@
     .founder-copy p.signature { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: var(--charcoal); margin-top: 24px; }
 
     /* BOUTIQUE */
-    .boutique-band { background: var(--champagne); color: var(--black); padding: 120px 5vw; text-align: center; }
+    .boutique-band { background: var(--ivory); color: var(--charcoal); padding: 70px 5vw; text-align: center; }
     .boutique-band .section-eyebrow { color: var(--gold); }
-    .boutique-band h3 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.2vw, 36px); font-weight: 400; margin-bottom: 18px; }
-    .boutique-band p { font-size: 14px; line-height: 1.9; color: var(--black); opacity: 0.75; max-width: 440px; margin: 0 auto 30px; }
+    .boutique-photo { max-width: 260px; aspect-ratio: 4/3; margin: 0 auto 26px; overflow: hidden; }
+    .boutique-band h3 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 2.6vw, 28px); font-weight: 400; margin-bottom: 14px; }
+    .boutique-band p { font-size: 13px; line-height: 1.8; color: var(--warm-gray); max-width: 380px; margin: 0 auto 24px; }
     .boutique-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; background: #25D366; color: #0d0b09; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1px; border-radius: 30px; transition: opacity 0.3s; }
     .btn-whatsapp:hover { opacity: 0.88; }
@@ -334,10 +337,12 @@
         .search-pill { padding: 5px 10px; font-size: 9px; }
         .icon-only { font-size: 9px; }
         .occasion-stack { gap: 24px; }
-        .occasion-panel { aspect-ratio: 4/3; }
+        .catalog-grid { grid-template-columns: 1fr; max-width: 340px; gap: 36px; }
+        .occasion-panel { aspect-ratio: 3/4; }
         .occasion-label { font-size: 19px; bottom: 16px; }
         .concierge { padding: 70px 6vw; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .boutique-band, .concierge-band { padding: 90px 6vw; }
+        .boutique-band { padding: 60px 6vw; }
+        .concierge-band { padding: 90px 6vw; }
         footer { grid-template-columns: 1fr; padding: 60px 6vw 30px; }
         .whatsapp-float { width: 50px; height: 50px; bottom: 18px; right: 18px; }
     }
@@ -528,6 +533,7 @@
 </div>
 
 <div class="boutique-band fade-in" id="boutique-band">
+    <div class="boutique-photo"><div class="ph">Store Photo</div></div>
     <div class="section-eyebrow">Visit the Store</div>
     <h3 class="serif">Wuse 2, Abuja</h3>
     <p>Opposite Park n Shop. Walk in anytime, or reach us directly on WhatsApp for a faster reply.</p>
@@ -788,10 +794,26 @@ document.addEventListener('DOMContentLoaded', function () {
         flash.classList.add('is-flashing');
     }
 
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.catalog-card')) {
+            document.querySelectorAll('.catalog-card.actions-visible').forEach(function (card) {
+                card.classList.remove('actions-visible');
+            });
+        }
+    });
+
     document.querySelectorAll('.catalog-card').forEach(function (card) {
         var name = card.dataset.name;
         var brand = card.dataset.brand;
         var price = parseFloat(card.dataset.price);
+
+        var frame = card.querySelector('.catalog-frame');
+        frame.addEventListener('click', function () {
+            document.querySelectorAll('.catalog-card.actions-visible').forEach(function (other) {
+                if (other !== card) other.classList.remove('actions-visible');
+            });
+            card.classList.toggle('actions-visible');
+        });
 
         var cartBtn = card.querySelector('.cart-btn');
         cartBtn.addEventListener('click', function (e) {
