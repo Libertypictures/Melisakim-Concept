@@ -78,14 +78,14 @@
     .nav.is-stuck { box-shadow: 0 4px 16px rgba(20,18,16,0.06); }
     .nav-row { display: flex; align-items: center; justify-content: space-between; padding: 26px 5vw; transition: padding 0.3s ease; }
     .nav.is-stuck .nav-row { padding-top: 16px; padding-bottom: 16px; }
-    .nav-mark { font-family: 'Playfair Display', serif; font-size: 15px; letter-spacing: 1.8px; text-transform: uppercase; white-space: nowrap; }
+    .nav-mark { font-family: 'Playfair Display', serif; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
     .nav-links { display: flex; gap: 32px; font-size: 12px; letter-spacing: 0.5px; }
     .nav-links a { color: var(--charcoal); text-decoration: none; opacity: 0.72; transition: opacity 0.25s; }
     .nav-links a:hover { opacity: 1; }
     .nav-icons { display: flex; gap: 22px; font-size: 12px; align-items: center; color: var(--charcoal); }
     .wishlist-link { display: inline-flex; align-items: center; gap: 5px; }
     .heart-icon { color: var(--pink); flex-shrink: 0; }
-    .search-pill { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 30px; padding: 9px 18px; font-size: 12px; color: var(--warm-gray); max-width: 260px; }
+    .search-pill { display: flex; align-items: center; gap: 10px; border: 1px solid var(--pink); border-radius: 30px; padding: 9px 18px; font-size: 12px; color: var(--warm-gray); width: 320px; }
     .search-short { display: none; }
 
     /* HERO */
@@ -104,7 +104,7 @@
     @keyframes cue-bob { 0%, 100% { opacity: 0.3; height: 30px; } 50% { opacity: 0.9; height: 44px; } }
 
     /* SECTION LABEL */
-    .section-wrap { padding: 120px 5vw; }
+    .section-wrap { padding: 120px 5vw; scroll-margin-top: 100px; }
     .section-wrap.tight { padding-top: 0; }
     .section-head { text-align: center; max-width: 560px; margin: 0 auto 60px; }
     .section-eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
@@ -141,21 +141,22 @@
     .editorial-card h4 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400; line-height: 1.35; }
 
     /* CONCIERGE / AI STYLIST PREVIEW */
-    .concierge-band { background: var(--black); color: var(--warm-white); padding: 120px 5vw; }
-    .concierge-band .section-eyebrow { color: var(--champagne); }
-    .concierge-band .section-head p { font-size: 14px; line-height: 1.8; color: rgba(253,251,247,0.68); margin: 18px auto 0; max-width: 480px; }
+    .concierge-band { background: var(--ivory); color: var(--charcoal); padding: 120px 5vw; }
+    .concierge-band .section-eyebrow { color: var(--gold); }
+    .concierge-band .section-head p { font-size: 14px; line-height: 1.8; color: var(--warm-gray); margin: 18px auto 0; max-width: 480px; }
     .concierge-list { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; margin-top: 30px; }
     .concierge-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 800px; margin: 60px auto 0; }
-    .concierge-chip { font-size: 12px; letter-spacing: 0.5px; color: rgba(253,251,247,0.85); }
+    .concierge-chip { font-size: 12px; letter-spacing: 0.5px; color: var(--warm-gray); }
 
-    .stylist-mock { background: var(--warm-white); padding: 30px; }
-    .stylist-mock-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 18px; }
+    .stylist-mock { background: var(--warm-white); border: 1px solid var(--line); padding: 30px; }
+    .stylist-mock-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 4px; }
+    .stylist-mock-sub { font-size: 11px; color: var(--warm-gray); margin-bottom: 18px; }
     .chat-bubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
     .chat-bubble.user { background: var(--pink); color: var(--warm-white); margin-left: auto; border-bottom-right-radius: 3px; }
     .chat-bubble.stylist { background: var(--cream); color: var(--black); border-bottom-left-radius: 3px; }
 
     /* BOOK YOUR APPOINTMENT — CALENDAR */
-    .calendar-card { background: var(--warm-white); padding: 30px; }
+    .calendar-card { background: var(--warm-white); border: 1px solid var(--line); padding: 30px; }
     .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
     .calendar-month { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--black); }
     .calendar-nav { display: flex; gap: 10px; }
@@ -193,10 +194,6 @@
     footer a:hover { opacity: 1; }
     .footer-bottom { grid-column: 1 / -1; border-top: 1px solid var(--line); margin-top: 40px; padding-top: 24px; font-size: 11px; color: var(--warm-gray); text-align: center; }
 
-    /* SCOPE NOTE */
-    .scope-note { background: var(--warm-white); border: 1px dashed var(--line); margin: 0 5vw 80px; padding: 26px 30px; font-size: 12px; line-height: 1.8; color: var(--warm-gray); }
-    .scope-note strong { color: var(--black); }
-
     /* FOUNDER */
     .founder { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 70px; align-items: center; }
     .founder .ph { aspect-ratio: 4/5; }
@@ -206,10 +203,10 @@
     .founder-copy p.signature { font-family: 'Playfair Display', serif; font-style: italic; font-size: 18px; color: var(--charcoal); margin-top: 24px; }
 
     /* BOUTIQUE */
-    .boutique-band { background: var(--black); color: var(--warm-white); padding: 120px 5vw; text-align: center; }
-    .boutique-band .section-eyebrow { color: var(--champagne); }
+    .boutique-band { background: var(--champagne); color: var(--black); padding: 120px 5vw; text-align: center; }
+    .boutique-band .section-eyebrow { color: var(--gold); }
     .boutique-band h3 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.2vw, 36px); font-weight: 400; margin-bottom: 18px; }
-    .boutique-band p { font-size: 14px; line-height: 1.9; color: rgba(253,251,247,0.7); max-width: 440px; margin: 0 auto 30px; }
+    .boutique-band p { font-size: 14px; line-height: 1.9; color: var(--black); opacity: 0.75; max-width: 440px; margin: 0 auto 30px; }
     .boutique-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
     .btn-whatsapp { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; background: #25D366; color: #0d0b09; text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1px; border-radius: 30px; transition: opacity 0.3s; }
     .btn-whatsapp:hover { opacity: 0.88; }
@@ -217,12 +214,64 @@
     /* FLOATING WHATSAPP */
     .whatsapp-float { position: fixed; bottom: 26px; right: 26px; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.2); z-index: 40; font-size: 26px; color: #fff; }
 
+    /* RECEIPT GENERATOR */
+    .receipt-fab { position: fixed; bottom: 26px; left: 26px; width: 56px; height: 56px; background: var(--pink); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.2); z-index: 40; color: #fff; padding: 0; }
+    .receipt-fab:active { transform: scale(0.95); }
+
+    .receipt-overlay { position: fixed; inset: 0; background: rgba(20,18,16,0.4); z-index: 45; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .receipt-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+    .receipt-panel {
+        position: fixed; left: 0; right: 0; bottom: 0; z-index: 46;
+        background: var(--warm-white); border-radius: 18px 18px 0 0;
+        max-height: 82vh; overflow-y: auto;
+        padding: 24px 22px calc(24px + env(safe-area-inset-bottom, 0px));
+        transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+        box-shadow: 0 -8px 30px rgba(20,18,16,0.15);
+    }
+    .receipt-panel.is-open { transform: translateY(0); }
+    .receipt-panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .receipt-panel-header span { font-family: 'Playfair Display', serif; font-size: 18px; }
+    .receipt-close { background: none; border: none; font-size: 26px; color: var(--warm-gray); cursor: pointer; line-height: 1; padding: 4px; }
+
+    .receipt-input, .receipt-item-input { width: 100%; padding: 12px 14px; background: var(--ivory); border: 1px solid var(--line); font-family: 'Inter', sans-serif; font-size: 16px; color: var(--charcoal); outline: none; border-radius: 4px; }
+    .receipt-input:focus, .receipt-item-input:focus { border-color: var(--pink); }
+    .receipt-input { margin-bottom: 16px; }
+
+    .receipt-item-row { display: grid; grid-template-columns: 1.4fr 1fr auto; gap: 8px; margin-bottom: 10px; align-items: center; }
+    .receipt-item-remove { background: none; border: none; color: var(--warm-gray); font-size: 20px; cursor: pointer; padding: 4px 6px; line-height: 1; }
+
+    .receipt-add-btn { width: 100%; padding: 11px; background: none; border: 1px dashed var(--pink); color: var(--pink); font-size: 12px; letter-spacing: 1px; cursor: pointer; border-radius: 4px; margin: 4px 0 20px; }
+
+    .receipt-total-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); margin-bottom: 18px; font-family: 'Playfair Display', serif; font-size: 20px; }
+    .receipt-total-row span:last-child { color: var(--pink); }
+
+    .receipt-generate-btn { width: 100%; padding: 15px; background: var(--pink); color: #fff; border: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px; }
+    .receipt-generate-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .receipt-output { display: none; }
+    .receipt-output.is-visible { display: block; }
+    .receipt-output-card { background: var(--ivory); border: 1px solid var(--line); padding: 24px; margin-bottom: 18px; }
+    .receipt-output-mark { font-family: 'Playfair Display', serif; font-size: 18px; text-align: center; margin-bottom: 4px; }
+    .receipt-output-sub { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; color: var(--warm-gray); margin-bottom: 18px; }
+    .receipt-output-meta { font-size: 11px; color: var(--warm-gray); margin-bottom: 16px; border-bottom: 1px dashed var(--line); padding-bottom: 14px; }
+    .receipt-output-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; }
+    .receipt-output-total { display: flex; justify-content: space-between; font-family: 'Playfair Display', serif; font-size: 19px; border-top: 1px solid var(--line); margin-top: 10px; padding-top: 14px; }
+    .receipt-output-actions { display: flex; gap: 10px; }
+    .receipt-output-actions button, .receipt-output-actions a { flex: 1; text-align: center; padding: 13px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; cursor: pointer; text-decoration: none; }
+    .receipt-share-btn { background: var(--pink); color: #fff; border: none; }
+    .receipt-new-btn { background: none; border: 1px solid var(--line); color: var(--charcoal); }
+
+    @media (max-width: 600px) {
+        .receipt-fab { width: 50px; height: 50px; bottom: 18px; left: 18px; }
+    }
+
     @media (max-width: 960px) {
         .nav-row { flex-wrap: wrap; justify-content: center; row-gap: 12px; padding: 16px 4vw; }
         .nav-mark { order: 1; width: 100%; text-align: center; font-size: 13px; letter-spacing: 1.4px; }
         .nav-links { order: 2; gap: 14px; font-size: 10px; }
         .nav-icons { order: 3; gap: 14px; font-size: 10px; }
-        .search-pill { padding: 6px 12px; max-width: none; }
+        .search-pill { padding: 6px 12px; width: auto; }
         .search-full { display: none; }
         .search-short { display: inline; }
         .nav.is-stuck .nav-row { padding-top: 12px; padding-bottom: 12px; }
@@ -254,13 +303,13 @@
     <div class="nav-row">
         <div class="nav-links">
             <a href="#the-edit">New Arrivals</a>
-            <a href="#">Deals</a>
+            <a href="#">Promo</a>
         </div>
-        <div class="nav-mark">Melisakim Clothing</div>
+        <div class="nav-mark">Melisakim</div>
         <div class="nav-icons">
-            <div class="search-pill"><span class="search-full">Search by designer, category, or color</span><span class="search-short">Search</span></div>
             <span class="icon-only wishlist-link"><svg class="heart-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.9-10-9.3C.5 8.4 2 4.5 5.8 4c2.2-.3 4.2.9 6.2 3.4C14 4.9 16 3.7 18.2 4c3.8.5 5.3 4.4 3.8 7.7C19.5 16.1 12 21 12 21z"/></svg>Wishlist</span>
             <span class="icon-only">Bag (0)</span>
+            <div class="search-pill"><span class="search-full">Search by designer, category, or color</span><span class="search-short">Search</span></div>
         </div>
     </div>
 </nav>
@@ -270,26 +319,12 @@
     <div class="hero-scrim"></div>
     <div class="hero-content fade-in">
         <div class="hero-eyebrow">Multi-Brand · Personally Curated</div>
-        <h1 class="hero-title serif">The houses worth owning, in one trusted place.</h1>
-        <a href="#the-edit" class="btn-line">Shop the Edit</a>
+        <h1 class="hero-title serif">Pieces worth owning, in one trusted place.</h1>
     </div>
     <div class="scroll-cue" aria-hidden="true"></div>
 </section>
 
-<div id="occasion" class="section-wrap fade-in">
-    <div class="section-head">
-        <div class="section-eyebrow">Shop by Category</div>
-        <h2 class="section-title serif">Browse the full selection.</h2>
-    </div>
-    <div class="occasion-grid">
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Bags</div></div>
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Purses</div></div>
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Jewelry</div></div>
-        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Shoes</div></div>
-    </div>
-</div>
-
-<div id="the-edit" class="section-wrap tight fade-in">
+<div id="the-edit" class="section-wrap fade-in">
     <div class="section-head">
         <div class="section-eyebrow">The Edit</div>
         <h2 class="section-title serif">Available now.</h2>
@@ -306,21 +341,33 @@
     </div>
 </div>
 
+<div id="occasion" class="section-wrap fade-in">
+    <div class="section-head">
+        <div class="section-eyebrow">Shop by Category</div>
+        <h2 class="section-title serif">Browse the full selection.</h2>
+    </div>
+    <div class="occasion-grid">
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Bags</div></div>
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Purses</div></div>
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Jewelry</div></div>
+        <div class="occasion-tile fade-in"><div class="ph"></div><div class="occasion-label">Shoes</div></div>
+    </div>
+</div>
+
 <div class="concierge-band fade-in">
     <div class="section-head">
         <div class="section-eyebrow">Personal Styling</div>
         <h2 class="section-title serif">A stylist, whenever you need one.</h2>
-        <p>From a single occasion to a full wardrobe refresh — reach a real stylist, get a quick style idea, or book an appointment below.</p>
+        <p>Get instant style ideas, or book time with our team.</p>
         <div class="concierge-list">
             <span class="concierge-chip">Book a Stylist</span>
-            <span class="concierge-chip">Video Consultation</span>
-            <span class="concierge-chip">Gift Assistance</span>
             <span class="concierge-chip">Private Shopping</span>
         </div>
     </div>
     <div class="concierge-cards">
         <div class="stylist-mock fade-in">
-            <div class="stylist-mock-label">Styling Assistant — Preview</div>
+            <div class="stylist-mock-label">AI Styling Assistant</div>
+            <div class="stylist-mock-sub">Instant style ideas — or talk to our desk staff on WhatsApp instead.</div>
             <div class="chat-bubble user">What would go well with an all-black outfit?</div>
             <div class="chat-bubble stylist">Warm it up with gold-tone jewelry and a structured bag in cognac or camel. Beaded accessories add a nice contrast in texture.</div>
         </div>
@@ -360,35 +407,33 @@
 </div>
 
 <div class="boutique-band fade-in">
-    <div class="section-eyebrow">Visit the Boutique</div>
+    <div class="section-eyebrow">Visit the Store</div>
     <h3 class="serif">Wuse 2, Abuja</h3>
-    <p>Opposite Park n Shop. Come see, touch, and try before you buy — or reach us directly on WhatsApp for a faster reply.</p>
+    <p>Opposite Park n Shop. Walk in anytime, or reach us directly on WhatsApp for a faster reply.</p>
     <div class="boutique-actions">
         <a href="https://wa.me/2347040656651" target="_blank" rel="noopener" class="btn-whatsapp">Chat on WhatsApp</a>
-        <a href="#" class="btn-line">Get Directions</a>
+        <a href="#" class="btn-dark">Get Directions</a>
     </div>
 </div>
 
-<div class="scope-note">
-    <strong>A note on scope:</strong> everything above is a fully real, working front-end design — open it in any browser and it looks and behaves exactly as shown. The appointment calendar and every WhatsApp link are genuinely functional right now, using your real number — no backend required, since WhatsApp itself is the booking confirmation step. Live product search is the one true preview left, and would need real backend work to search an actual catalog. The styling assistant is scoped deliberately light — general color and style advice, not personalized to a real product catalog — which makes it genuinely buildable: a chat interface calling an AI provider (like ChatGPT or Gemini) through a small proxy that keeps the API key private. An afternoon of work, not a backend project.
-</div>
+
 
 <footer>
     <div>
-        <div class="footer-mark">Melisakim Clothing</div>
-        <p class="footer-note">Curated pieces from the world's most coveted houses.<br>By appointment and online.</p>
+        <div class="footer-mark">Melisakim</div>
+        <p class="footer-note">Curated pieces from the world's most coveted houses.<br>Walk-in, by appointment, or online.</p>
     </div>
     <div>
         <h5>Shop</h5>
-        <a href="#">The Edit</a>
-        <a href="#">Designers</a>
-        <a href="#">Bags</a>
+        <a href="#the-edit">The Edit</a>
+        <a href="#occasion">Shop by Category</a>
+        <a href="#">Promo</a>
     </div>
     <div>
         <h5>Melisakim</h5>
         <a href="#">About</a>
         <a href="#">Meet Lisa</a>
-        <a href="#">The Boutique</a>
+        <a href="#">The Store</a>
     </div>
     <div>
         <h5>Client Care</h5>
@@ -396,10 +441,41 @@
         <a href="#">Delivery</a>
         <a href="#">Returns</a>
     </div>
-    <div class="footer-bottom">MELISAKIM CLOTHING &copy; 2026 — Design concept</div>
+    <div class="footer-bottom">MELISAKIM &copy; 2026 — Design concept</div>
 </footer>
 
 <a href="https://wa.me/2347040656651" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 18px;">WA</a>
+
+<button class="receipt-fab" id="receipt-fab" aria-label="Open quick receipt tool">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-3 2-3-2-3 2-3-2-1 1V3a1 1 0 0 1 1-1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="12" y2="15"/></svg>
+</button>
+
+<div class="receipt-overlay" id="receipt-overlay"></div>
+
+<div class="receipt-panel" id="receipt-panel">
+    <div class="receipt-panel-header">
+        <span>Quick Receipt</span>
+        <button class="receipt-close" id="receipt-close" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="receipt-body" id="receipt-body">
+        <input type="text" id="receipt-customer" class="receipt-input" placeholder="Customer name (optional)">
+
+        <div id="receipt-items"></div>
+        <button type="button" class="receipt-add-btn" id="receipt-add-item">+ Add Item</button>
+
+        <div class="receipt-total-row"><span>Total</span><span id="receipt-total">&#8358;0</span></div>
+        <button type="button" class="receipt-generate-btn" id="receipt-generate" disabled>Generate Receipt</button>
+    </div>
+
+    <div class="receipt-output" id="receipt-output">
+        <div class="receipt-output-card" id="receipt-output-card"></div>
+        <div class="receipt-output-actions">
+            <a href="#" id="receipt-share" class="receipt-share-btn" target="_blank" rel="noopener">Share via WhatsApp</a>
+            <button type="button" class="receipt-new-btn" id="receipt-new">Start New</button>
+        </div>
+    </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -407,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var els = document.querySelectorAll('.fade-in');
     var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-            if (entry.isIntersecting) entry.target.classList.add('in-view');
+            entry.target.classList.toggle('in-view', entry.isIntersecting);
         });
     }, { threshold: 0.15 });
     els.forEach(function (el) { observer.observe(el); });
@@ -504,6 +580,126 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     renderCalendar();
+
+    // ---- QUICK RECEIPT GENERATOR ----
+    var receiptFab = document.getElementById('receipt-fab');
+    var receiptPanel = document.getElementById('receipt-panel');
+    var receiptOverlay = document.getElementById('receipt-overlay');
+    var receiptClose = document.getElementById('receipt-close');
+    var receiptItems = document.getElementById('receipt-items');
+    var receiptAddItem = document.getElementById('receipt-add-item');
+    var receiptTotalEl = document.getElementById('receipt-total');
+    var receiptGenerateBtn = document.getElementById('receipt-generate');
+    var receiptBody = document.getElementById('receipt-body');
+    var receiptOutput = document.getElementById('receipt-output');
+    var receiptOutputCard = document.getElementById('receipt-output-card');
+    var receiptShareBtn = document.getElementById('receipt-share');
+    var receiptNewBtn = document.getElementById('receipt-new');
+    var receiptCustomer = document.getElementById('receipt-customer');
+    var itemRowCount = 0;
+
+    function openReceiptPanel() {
+        receiptPanel.classList.add('is-open');
+        receiptOverlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeReceiptPanel() {
+        receiptPanel.classList.remove('is-open');
+        receiptOverlay.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+    receiptFab.addEventListener('click', openReceiptPanel);
+    receiptClose.addEventListener('click', closeReceiptPanel);
+    receiptOverlay.addEventListener('click', closeReceiptPanel);
+
+    function addReceiptItemRow() {
+        itemRowCount++;
+        var row = document.createElement('div');
+        row.className = 'receipt-item-row';
+        row.innerHTML =
+            '<input type="text" class="receipt-item-input receipt-item-name" placeholder="Item name">' +
+            '<input type="number" class="receipt-item-input receipt-item-price" placeholder="\u20a60" min="0" step="1">' +
+            '<button type="button" class="receipt-item-remove" aria-label="Remove item">&times;</button>';
+        receiptItems.appendChild(row);
+
+        var priceInput = row.querySelector('.receipt-item-price');
+        var nameInput = row.querySelector('.receipt-item-name');
+        var removeBtn = row.querySelector('.receipt-item-remove');
+        priceInput.addEventListener('input', updateReceiptTotal);
+        nameInput.addEventListener('input', updateReceiptTotal);
+        removeBtn.addEventListener('click', function () {
+            row.remove();
+            updateReceiptTotal();
+        });
+    }
+
+    function getReceiptItems() {
+        var rows = receiptItems.querySelectorAll('.receipt-item-row');
+        var items = [];
+        rows.forEach(function (row) {
+            var name = row.querySelector('.receipt-item-name').value.trim();
+            var price = parseFloat(row.querySelector('.receipt-item-price').value) || 0;
+            if (name && price > 0) items.push({ name: name, price: price });
+        });
+        return items;
+    }
+
+    function updateReceiptTotal() {
+        var items = getReceiptItems();
+        var total = items.reduce(function (sum, it) { return sum + it.price; }, 0);
+        receiptTotalEl.textContent = '\u20a6' + total.toLocaleString();
+        receiptGenerateBtn.disabled = items.length === 0;
+    }
+
+    receiptAddItem.addEventListener('click', addReceiptItemRow);
+    addReceiptItemRow();
+    addReceiptItemRow();
+
+    var lastReceiptText = '';
+
+    receiptGenerateBtn.addEventListener('click', function () {
+        var items = getReceiptItems();
+        if (!items.length) return;
+        var total = items.reduce(function (sum, it) { return sum + it.price; }, 0);
+        var customer = receiptCustomer.value.trim();
+        var now = new Date();
+        var dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        var rowsHtml = items.map(function (it) {
+            return '<div class="receipt-output-row"><span>' + escapeHtml(it.name) + '</span><span>\u20a6' + it.price.toLocaleString() + '</span></div>';
+        }).join('');
+
+        receiptOutputCard.innerHTML =
+            '<div class="receipt-output-mark">Melisakim</div>' +
+            '<div class="receipt-output-sub">Receipt</div>' +
+            '<div class="receipt-output-meta">' + dateStr + (customer ? ' &middot; ' + escapeHtml(customer) : '') + '</div>' +
+            rowsHtml +
+            '<div class="receipt-output-total"><span>Total</span><span>\u20a6' + total.toLocaleString() + '</span></div>';
+
+        var textLines = items.map(function (it) { return it.name + ' - \u20a6' + it.price.toLocaleString(); });
+        lastReceiptText = 'Melisakim Receipt\n' + dateStr + (customer ? '\nCustomer: ' + customer : '') +
+            '\n\n' + textLines.join('\n') + '\n\nTotal: \u20a6' + total.toLocaleString();
+        receiptShareBtn.href = 'https://wa.me/?text=' + encodeURIComponent(lastReceiptText);
+
+        receiptBody.style.display = 'none';
+        receiptOutput.classList.add('is-visible');
+    });
+
+    receiptNewBtn.addEventListener('click', function () {
+        receiptItems.innerHTML = '';
+        receiptCustomer.value = '';
+        addReceiptItemRow();
+        addReceiptItemRow();
+        updateReceiptTotal();
+        receiptOutput.classList.remove('is-visible');
+        receiptBody.style.display = '';
+    });
+
+    function escapeHtml(str) {
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
 });
 </script>
 
