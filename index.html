@@ -205,7 +205,7 @@
     .footer-bottom { grid-column: 1 / -1; border-top: 1px solid var(--line); margin-top: 40px; padding-top: 24px; font-size: 11px; color: var(--warm-gray); text-align: center; }
 
     /* FOUNDER */
-    .founder { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 70px; align-items: center; }
+    .founder { display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 40px; align-items: center; }
     .founder .ph { aspect-ratio: 4/5; }
     .founder-copy .section-eyebrow { text-align: left; }
     .founder-copy h3 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.4vw, 40px); font-weight: 400; margin-bottom: 20px; line-height: 1.25; }
@@ -326,12 +326,15 @@
         .search-full { display: none; }
         .search-short { display: inline; }
         .nav.is-stuck .nav-row { padding-top: 12px; padding-bottom: 12px; }
-        .founder { grid-template-columns: 1fr; }
+        .founder { grid-template-columns: 1fr; gap: 24px; }
+        .founder .ph { max-width: 200px; margin: 0 auto; aspect-ratio: 4/5; }
         .concierge-cards { grid-template-columns: 1fr; }
         footer { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 600px) {
+        .hero { height: 82vh; }
+        .hero-content { padding-bottom: 110px; }
         .section-wrap { padding: 90px 6vw; }
         .nav-links, .nav-icons { gap: 10px; font-size: 9px; }
         .search-pill { padding: 5px 10px; font-size: 9px; }
@@ -613,6 +616,7 @@ async function loadStorefrontSettings() {
             const video = document.getElementById('hero-video');
             video.src = API_BASE + s.hero_video_url;
             video.load();
+            video.play().catch(function () { /* if a browser blocks it, the still photo underneath is already showing, so nothing breaks */ });
         }
 
         if (s.founder_name) document.getElementById('founder-name-text').textContent = '\u2014 ' + s.founder_name;
@@ -649,6 +653,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
     els.forEach(function (el) { observer.observe(el); });
+    window.fadeInObserver = observer;
 
     loadStorefrontSettings();
 
@@ -784,7 +789,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var photoHtml = (p.images && p.images.length)
             ? '<img src="' + API_BASE + p.images[0].url + '" alt="' + escapeHtml(p.title) + '">'
             : '<div class="ph">' + escapeHtml(p.title) + '</div>';
-        return '<div class="catalog-card fade-in in-view" data-name="' + escapeHtml(p.title) + '" data-brand="' + escapeHtml(p.brand || '') + '" data-price="' + p.price + '">' +
+        return '<div class="catalog-card fade-in" data-name="' + escapeHtml(p.title) + '" data-brand="' + escapeHtml(p.brand || '') + '" data-price="' + p.price + '">' +
             '<div class="catalog-frame">' + photoHtml + '<div class="catalog-add-flash"></div>' +
             (p.isNew ? '<span class="catalog-new-badge">New</span>' : '') +
             '<div class="catalog-actions">' +
@@ -850,6 +855,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             grid.innerHTML = products.map(catalogCardHtml).join('');
             grid.querySelectorAll('.catalog-card').forEach(wireCatalogCard);
+            if (window.fadeInObserver) {
+                grid.querySelectorAll('.catalog-card').forEach(function (card) { window.fadeInObserver.observe(card); });
+            }
         } catch (err) {
             grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--warm-gray); font-size:13px;">Couldn\'t load the collection right now \u2014 please refresh.</p>';
             console.error('Catalog load failed:', err);
