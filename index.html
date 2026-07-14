@@ -375,13 +375,13 @@
       visible underneath it — nothing breaks in the meantime.
       Muted + playsinline are required for autoplay to work on iPhones.
     -->
-    <video class="hero-video" autoplay muted loop playsinline poster="">
+    <video class="hero-video" id="hero-video" autoplay muted loop playsinline poster="">
         <!-- <source src="your-video.mp4" type="video/mp4"> -->
     </video>
     <div class="hero-scrim"></div>
     <div class="hero-content fade-in">
-        <div class="hero-eyebrow">Multi-Brand · Personally Curated</div>
-        <h1 class="hero-title serif">Pieces worth owning, in one trusted place.</h1>
+        <div class="hero-eyebrow" id="hero-eyebrow-text">Multi-Brand · Personally Curated</div>
+        <h1 class="hero-title serif" id="hero-heading-text">Pieces worth owning, in one trusted place.</h1>
     </div>
     <div class="scroll-cue" aria-hidden="true"></div>
 </section>
@@ -450,25 +450,24 @@
 
 <div class="section-wrap fade-in">
     <div class="founder">
-        <div class="ph">Portrait of Lisa</div>
+        <div class="ph" id="founder-photo-el">Portrait of Lisa</div>
         <div class="founder-copy">
             <div class="section-eyebrow">The Face Behind Melisakim</div>
-            <h3 class="serif">Every piece here has passed through my own hands first.</h3>
-            <p>Melisakim didn't start as a business plan — it started with a genuine eye for quality, and a community that trusted that eye. Every handbag, every pair of shoes, every piece of jewellery is something I would wear myself before I'd ever offer it to you.</p>
-            <p>That's still true today, at any size.</p>
-            <p class="signature">— Lisa Ogunrobo</p>
+            <h3 class="serif" id="founder-heading-text">Every piece here has passed through my own hands first.</h3>
+            <p id="founder-story-text">Melisakim didn't start as a business plan — it started with a genuine eye for quality, and a community that trusted that eye. Every handbag, every pair of shoes, every piece of jewellery is something I would wear myself before I'd ever offer it to you. That's still true today, at any size.</p>
+            <p class="signature" id="founder-name-text">— Lisa Ogunrobo</p>
         </div>
     </div>
 </div>
 
 <div class="boutique-band fade-in" id="boutique-band">
-    <div class="boutique-photo"><div class="ph">Store Photo</div></div>
+    <div class="boutique-photo" id="store-photo-el"><div class="ph">Store Photo</div></div>
     <div class="section-eyebrow">Visit the Store</div>
-    <h3 class="serif">Wuse 2, Abuja</h3>
-    <p>Opposite Park n Shop. Walk in anytime, or reach us directly on WhatsApp for a faster reply.</p>
+    <h3 class="serif" id="store-address-text">Wuse 2, Abuja</h3>
+    <p>Walk in anytime, or reach us directly on WhatsApp for a faster reply.</p>
     <div class="boutique-actions">
-        <a href="https://wa.me/2347040656651" target="_blank" rel="noopener" class="btn-whatsapp">Chat on WhatsApp</a>
-        <a href="#" class="btn-dark">Get Directions</a>
+        <a href="https://wa.me/2347040656651" target="_blank" rel="noopener" class="btn-whatsapp" id="boutique-whatsapp-link">Chat on WhatsApp</a>
+        <a href="#" class="btn-dark" id="directions-link">Get Directions</a>
     </div>
 </div>
 
@@ -602,6 +601,45 @@
 <script>
 const API_BASE = 'https://melisakim-api.visualsliberty.workers.dev';
 
+async function loadStorefrontSettings() {
+    try {
+        const res = await fetch(API_BASE + '/api/settings');
+        const data = await res.json();
+        const s = data.settings || {};
+
+        if (s.hero_eyebrow) document.getElementById('hero-eyebrow-text').textContent = s.hero_eyebrow;
+        if (s.hero_heading) document.getElementById('hero-heading-text').textContent = s.hero_heading;
+        if (s.hero_video_url) {
+            const video = document.getElementById('hero-video');
+            video.src = API_BASE + s.hero_video_url;
+            video.load();
+        }
+
+        if (s.founder_name) document.getElementById('founder-name-text').textContent = '\u2014 ' + s.founder_name;
+        if (s.founder_heading) document.getElementById('founder-heading-text').textContent = s.founder_heading;
+        if (s.founder_story) document.getElementById('founder-story-text').textContent = s.founder_story;
+        if (s.founder_photo_url) {
+            document.getElementById('founder-photo-el').innerHTML = '<img src="' + API_BASE + s.founder_photo_url + '" alt="' + (s.founder_name || 'Founder') + '">';
+        }
+
+        if (s.store_address) document.getElementById('store-address-text').textContent = s.store_address;
+        if (s.store_photo_url) {
+            document.getElementById('store-photo-el').innerHTML = '<img src="' + API_BASE + s.store_photo_url + '" alt="Store">';
+        }
+
+        if (s.whatsapp_number) {
+            window.storeWhatsApp = s.whatsapp_number;
+            document.getElementById('boutique-whatsapp-link').href = 'https://wa.me/' + s.whatsapp_number;
+            document.getElementById('whatsapp-float').href = 'https://wa.me/' + s.whatsapp_number;
+        }
+        if (s.directions_url) {
+            document.getElementById('directions-link').href = s.directions_url;
+        }
+    } catch (err) {
+        console.error('Could not load storefront settings:', err);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     if (!('IntersectionObserver' in window)) return;
     var els = document.querySelectorAll('.fade-in');
@@ -611,6 +649,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
     els.forEach(function (el) { observer.observe(el); });
+
+    loadStorefrontSettings();
 
     var nav = document.getElementById('site-nav');
     window.addEventListener('scroll', function () {
@@ -695,7 +735,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!selectedDate || !selectedTime) return;
         var dateLabel = MONTH_NAMES[selectedDate.getMonth()] + ' ' + selectedDate.getDate() + ', ' + selectedDate.getFullYear();
         var message = "Hi Melisakim! I'd like to book a styling appointment for " + dateLabel + " at " + selectedTime + ".";
-        window.open('https://wa.me/2347040656651?text=' + encodeURIComponent(message), '_blank');
+        var waNumber = window.storeWhatsApp || '2347040656651';
+        window.open('https://wa.me/' + waNumber + '?text=' + encodeURIComponent(message), '_blank');
     });
 
     renderCalendar();
