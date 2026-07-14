@@ -602,6 +602,17 @@
 </div>
 
 <script>
+// Always start at the top on load or reload — even if the URL still has
+// something like #the-edit from a nav click earlier in the visit. Clicking
+// a nav link during the visit still scrolls smoothly to that section as
+// normal; this only overrides the browser's automatic "jump straight
+// there" behavior that happens on a fresh page load/reload.
+if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+}
+window.scrollTo(0, 0);
+window.addEventListener('load', function () { window.scrollTo(0, 0); });
+
 const API_BASE = 'https://melisakim-api.visualsliberty.workers.dev';
 
 async function loadStorefrontSettings() {
@@ -613,10 +624,27 @@ async function loadStorefrontSettings() {
         if (s.hero_eyebrow) document.getElementById('hero-eyebrow-text').textContent = s.hero_eyebrow;
         if (s.hero_heading) document.getElementById('hero-heading-text').textContent = s.hero_heading;
         if (s.hero_video_url) {
-            const video = document.getElementById('hero-video');
-            video.src = API_BASE + s.hero_video_url;
-            video.load();
-            video.play().catch(function () { /* if a browser blocks it, the still photo underneath is already showing, so nothing breaks */ });
+            // iOS Safari is much more reliable about autoplaying a video
+            // that had a real source present from the moment it entered
+            // the page, versus one whose source gets swapped in afterward.
+            // Building a brand-new <video> element (source included) and
+            // replacing the empty placeholder achieves that.
+            const oldVideo = document.getElementById('hero-video');
+            const newVideo = document.createElement('video');
+            newVideo.id = 'hero-video';
+            newVideo.className = 'hero-video';
+            newVideo.autoplay = true;
+            newVideo.muted = true;
+            newVideo.loop = true;
+            newVideo.playsInline = true;
+            newVideo.setAttribute('playsinline', '');
+            newVideo.setAttribute('webkit-playsinline', ''); // older iOS Safari versions look for this specifically
+            newVideo.setAttribute('muted', '');
+            newVideo.innerHTML = '<source src="' + API_BASE + s.hero_video_url + '" type="video/mp4">';
+            oldVideo.parentNode.replaceChild(newVideo, oldVideo);
+            newVideo.play().catch(function (err) {
+                console.error('Hero video could not autoplay:', err.message);
+            });
         }
 
         if (s.founder_name) document.getElementById('founder-name-text').textContent = '\u2014 ' + s.founder_name;
