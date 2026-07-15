@@ -113,7 +113,8 @@
 
     /* OCCASION GRID */
     .occasion-stack { display: flex; flex-direction: column; gap: 36px; max-width: 420px; margin: 0 auto; }
-    .occasion-panel { position: relative; aspect-ratio: 3/4; overflow: hidden; }
+    .occasion-panel { position: relative; aspect-ratio: 3/4; overflow: hidden; display: block; text-decoration: none; color: inherit; background: var(--cream); }
+    .occasion-panel img { width: 100%; height: 100%; object-fit: cover; }
     .occasion-panel .ph { transition: transform 0.9s cubic-bezier(0.16,1,0.3,1); }
     .occasion-panel:hover .ph { transform: scale(1.05); }
     .occasion-label { position: absolute; left: 0; right: 0; bottom: 26px; text-align: center; color: var(--warm-white); font-family: 'Playfair Display', serif; font-style: italic; font-size: 26px; z-index: 2; }
@@ -404,11 +405,8 @@
         <div class="section-eyebrow">Shop by Category</div>
         <h2 class="section-title serif">Browse the full selection.</h2>
     </div>
-    <div class="occasion-stack">
-        <div class="occasion-panel fade-in"><div class="ph"></div><div class="occasion-label">Bags</div></div>
-        <div class="occasion-panel fade-in"><div class="ph"></div><div class="occasion-label">Purses</div></div>
-        <div class="occasion-panel fade-in"><div class="ph"></div><div class="occasion-label">Jewelry</div></div>
-        <div class="occasion-panel fade-in"><div class="ph"></div><div class="occasion-label">Shoes</div></div>
+    <div class="occasion-stack" id="occasion-stack">
+        <div class="occasion-panel"><div class="ph">Loading&hellip;</div></div>
     </div>
 </div>
 
@@ -892,6 +890,33 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     loadCatalog();
+
+    async function loadCategoryPanels() {
+        var stack = document.getElementById('occasion-stack');
+        try {
+            var res = await fetch(API_BASE + '/api/categories');
+            var data = await res.json();
+            var categories = (data.categories || []).slice().sort(function (a, b) { return a.displayOrder - b.displayOrder; });
+
+            if (!categories.length) {
+                stack.innerHTML = '';
+                return;
+            }
+
+            stack.innerHTML = categories.map(function (c) {
+                var photoHtml = c.imageUrl ? '<img src="' + API_BASE + c.imageUrl + '" alt="' + escapeHtml(c.name) + '">' : '<div class="ph"></div>';
+                return '<a href="#the-edit" class="occasion-panel fade-in" data-category="' + escapeHtml(c.name) + '">' + photoHtml + '<div class="occasion-label">' + escapeHtml(c.name) + '</div></a>';
+            }).join('');
+
+            stack.querySelectorAll('.occasion-panel').forEach(function (panel) {
+                if (window.fadeInObserver) window.fadeInObserver.observe(panel);
+            });
+        } catch (err) {
+            console.error('Could not load categories:', err);
+            stack.innerHTML = '';
+        }
+    }
+    loadCategoryPanels();
 
     // ---- WISHLIST MODAL ----
     var wishlistOverlay = document.getElementById('wishlist-overlay');
