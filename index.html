@@ -644,15 +644,24 @@ async function loadStorefrontSettings() {
                 console.error('Hero video could not autoplay:', err.message);
             });
 
-            // Mobile browsers commonly pause video when a tab is
-            // backgrounded (switching apps, locking the phone) and don't
-            // resume it automatically — this brings it back to life the
-            // moment the visitor returns.
+            // Mobile browsers pause video when the app is backgrounded and
+            // often don't cleanly resume it — sometimes a plain play() is
+            // enough, sometimes the video needs a fresh load() first. This
+            // tries both, and listens on more than one signal for
+            // "the visitor is back", since different phones/browsers fire
+            // different events for this.
+            function resumeHeroVideo() {
+                if (!newVideo.paused) return;
+                newVideo.play().catch(function () {
+                    newVideo.load();
+                    newVideo.play().catch(function () { /* nothing further to try if the browser still declines */ });
+                });
+            }
             document.addEventListener('visibilitychange', function () {
-                if (document.visibilityState === 'visible' && newVideo.paused) {
-                    newVideo.play().catch(function () { /* nothing to do if the browser still declines */ });
-                }
+                if (document.visibilityState === 'visible') resumeHeroVideo();
             });
+            window.addEventListener('pageshow', resumeHeroVideo);
+            window.addEventListener('focus', resumeHeroVideo);
         }
 
         if (s.founder_name) document.getElementById('founder-name-text').textContent = '\u2014 ' + s.founder_name;
