@@ -643,6 +643,16 @@ async function loadStorefrontSettings() {
             newVideo.play().catch(function (err) {
                 console.error('Hero video could not autoplay:', err.message);
             });
+
+            // Mobile browsers commonly pause video when a tab is
+            // backgrounded (switching apps, locking the phone) and don't
+            // resume it automatically — this brings it back to life the
+            // moment the visitor returns.
+            document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState === 'visible' && newVideo.paused) {
+                    newVideo.play().catch(function () { /* nothing to do if the browser still declines */ });
+                }
+            });
         }
 
         if (s.founder_name) document.getElementById('founder-name-text').textContent = '\u2014 ' + s.founder_name;
