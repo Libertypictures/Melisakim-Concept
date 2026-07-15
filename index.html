@@ -662,6 +662,16 @@ async function loadStorefrontSettings() {
             });
             window.addEventListener('pageshow', resumeHeroVideo);
             window.addEventListener('focus', resumeHeroVideo);
+
+            // iOS specifically blocks *programmatic* resume of a video
+            // that was paused by backgrounding the app — this is an Apple
+            // restriction, not something any code can override. But it
+            // does allow resuming on an actual tap/scroll from the
+            // visitor, so this catches the very next one of those and
+            // uses it to bring the video back.
+            ['touchstart', 'click', 'scroll'].forEach(function (eventName) {
+                document.addEventListener(eventName, resumeHeroVideo, { passive: true });
+            });
         }
 
         if (s.founder_name) document.getElementById('founder-name-text').textContent = '\u2014 ' + s.founder_name;
