@@ -317,6 +317,56 @@
         .promo-modal-body { padding: 8px 20px 20px; }
     }
 
+    /* CATEGORY MODAL — reuses .promo-overlay for the backdrop */
+    .cat-modal {
+        position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.96); z-index: 56;
+        width: min(680px, 92vw); max-height: 85vh; background: var(--warm-white);
+        opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease;
+        display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(20,18,16,0.25);
+    }
+    .cat-modal.is-open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .cat-modal-body { overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 20px 24px 28px; }
+    .cat-modal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .cat-modal-item { cursor: pointer; text-align: left; }
+    .cat-modal-item-frame { position: relative; aspect-ratio: 3/4; background: var(--cream); overflow: hidden; margin-bottom: 8px; }
+    .cat-modal-item-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .cat-modal-item .catalog-brand { margin-top: 0; font-size: 9px; }
+    .cat-modal-item p.serif { font-size: 13px; margin-bottom: 2px; }
+    .cat-modal-item .price { font-size: 12px; }
+    @media (max-width: 600px) {
+        .cat-modal { width: 94vw; max-height: 82vh; }
+        .cat-modal-body { padding: 16px 18px 22px; }
+        .cat-modal-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    }
+
+    /* PRODUCT DETAIL MODAL */
+    .pd-modal {
+        position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.96); z-index: 58;
+        width: min(560px, 92vw); max-height: 88vh; background: var(--warm-white);
+        opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease;
+        display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(20,18,16,0.25);
+    }
+    .pd-modal.is-open { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .pd-modal-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .pd-frame { width: 100%; aspect-ratio: 4/5; background: var(--cream); position: relative; }
+    .pd-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .pd-close { position: absolute; top: 14px; right: 14px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; background: rgba(253,251,247,0.92); border: none; font-size: 22px; color: var(--charcoal); cursor: pointer; line-height: 1; }
+    .pd-info { padding: 24px 26px 28px; }
+    .pd-brand { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .pd-title { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px; }
+    .pd-price { font-size: 16px; color: var(--pink); font-weight: 500; margin-bottom: 18px; }
+    .pd-description { font-size: 13px; line-height: 1.8; color: var(--warm-gray); margin-bottom: 26px; }
+    .pd-actions { display: flex; gap: 10px; }
+    .pd-actions button { flex: 1; padding: 14px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: opacity 0.2s ease; }
+    .pd-wishlist-btn { background: none; border: 1px solid var(--pink); color: var(--pink); }
+    .pd-wishlist-btn.is-active { background: var(--pink); color: #fff; }
+    .pd-cart-btn { background: var(--black); color: var(--warm-white); border: none; }
+    .pd-cart-btn:hover, .pd-wishlist-btn:hover { opacity: 0.85; }
+    @media (max-width: 600px) {
+        .pd-modal { width: 94vw; max-height: 90vh; }
+        .pd-info { padding: 20px 20px 22px; }
+    }
+
     @media (max-width: 960px) {
         .nav-row { flex-wrap: wrap; justify-content: center; row-gap: 20px; column-gap: 28px; padding: 18px 4vw; }
         .nav-mark { order: 1; width: 100%; text-align: center; font-size: 13px; letter-spacing: 1.4px; }
@@ -599,6 +649,34 @@
     </div>
 </div>
 
+<div class="promo-overlay" id="cat-modal-overlay"></div>
+<div class="cat-modal" id="cat-modal">
+    <div class="promo-modal-header">
+        <span id="cat-modal-title">Category</span>
+        <button class="promo-close" id="cat-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="cat-modal-body">
+        <div class="cat-modal-grid" id="cat-modal-grid"></div>
+    </div>
+</div>
+
+<div class="promo-overlay" id="pd-overlay"></div>
+<div class="pd-modal" id="pd-modal">
+    <div class="pd-modal-body">
+        <div class="pd-frame" id="pd-frame"></div>
+        <div class="pd-info">
+            <p class="pd-brand" id="pd-brand"></p>
+            <h3 class="pd-title serif" id="pd-title"></h3>
+            <p class="pd-price" id="pd-price"></p>
+            <p class="pd-description" id="pd-description"></p>
+            <div class="pd-actions">
+                <button class="pd-wishlist-btn" id="pd-wishlist-btn">Add to Wishlist</button>
+                <button class="pd-cart-btn" id="pd-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 // Always start at the top on load or reload — even if the URL still has
 // something like #the-edit from a nav click earlier in the visit. Clicking
@@ -844,21 +922,26 @@ document.addEventListener('DOMContentLoaded', function () {
         var photoHtml = (p.images && p.images.length)
             ? '<img src="' + API_BASE + p.images[0].url + '" alt="' + escapeHtml(p.title) + '">'
             : '<div class="ph">' + escapeHtml(p.title) + '</div>';
-        return '<div class="catalog-card fade-in" data-name="' + escapeHtml(p.title) + '" data-brand="' + escapeHtml(p.brand || '') + '" data-price="' + p.price + '">' +
+        return '<div class="catalog-card fade-in" data-id="' + p.id + '" data-name="' + escapeHtml(p.title) + '" data-brand="' + escapeHtml(p.brand || '') + '" data-price="' + p.price + '">' +
             '<div class="catalog-frame">' + photoHtml + '<div class="catalog-add-flash"></div>' +
             (p.isNew ? '<span class="catalog-new-badge">New</span>' : '') +
             '<div class="catalog-actions">' +
                 '<button class="catalog-action-btn wishlist-btn" aria-label="Add to wishlist">' + wishlistBtnIcon + '</button>' +
                 '<button class="catalog-action-btn cart-btn" aria-label="Add to cart">' + cartBtnIcon + '</button>' +
             '</div></div>' +
-            '<p class="catalog-brand">' + escapeHtml(p.brand || '') + '</p><p class="price">' + formatPrice(p.price) + '</p>' +
+            '<button type="button" class="catalog-info-btn" style="background:none; border:none; padding:0; text-align:left; cursor:pointer; width:100%;">' +
+                '<p class="catalog-brand">' + escapeHtml(p.brand || '') + '</p><p class="serif">' + escapeHtml(p.title) + '</p><p class="price">' + formatPrice(p.price) + '</p>' +
+            '</button>' +
         '</div>';
     }
+
+    var mainCatalogProducts = []; // last-loaded main grid products, for opening detail without a second fetch
 
     function wireCatalogCard(card) {
         var name = card.dataset.name;
         var brand = card.dataset.brand;
         var price = parseFloat(card.dataset.price);
+        var id = parseInt(card.dataset.id, 10);
 
         var frame = card.querySelector('.catalog-frame');
         frame.addEventListener('click', function () {
@@ -866,6 +949,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (other !== card) other.classList.remove('actions-visible');
             });
             card.classList.toggle('actions-visible');
+        });
+
+        var infoBtn = card.querySelector('.catalog-info-btn');
+        infoBtn.addEventListener('click', function () {
+            var product = mainCatalogProducts.find(function (p) { return p.id === id; });
+            if (product) openProductDetail(product);
         });
 
         var cartBtn = card.querySelector('.cart-btn');
@@ -902,6 +991,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!res.ok) throw new Error('Request failed (' + res.status + ')');
             var data = await res.json();
             var products = data.products || [];
+            mainCatalogProducts = products;
 
             if (!products.length) {
                 grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--warm-gray); font-size:13px;">New pieces are being added — check back shortly.</p>';
@@ -934,11 +1024,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             stack.innerHTML = categories.map(function (c) {
                 var photoHtml = c.imageUrl ? '<img src="' + API_BASE + c.imageUrl + '" alt="' + escapeHtml(c.name) + '">' : '<div class="ph"></div>';
-                return '<a href="#the-edit" class="occasion-panel fade-in" data-category="' + escapeHtml(c.name) + '">' + photoHtml + '<div class="occasion-label">' + escapeHtml(c.name) + '</div></a>';
+                return '<a href="#" class="occasion-panel fade-in" data-category="' + escapeHtml(c.name) + '">' + photoHtml + '<div class="occasion-label">' + escapeHtml(c.name) + '</div></a>';
             }).join('');
 
             stack.querySelectorAll('.occasion-panel').forEach(function (panel) {
                 if (window.fadeInObserver) window.fadeInObserver.observe(panel);
+                panel.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openCategoryModal(panel.dataset.category);
+                });
             });
         } catch (err) {
             console.error('Could not load categories:', err);
@@ -946,6 +1040,125 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     loadCategoryPanels();
+
+    // ---- CATEGORY MODAL — shows only that category's real products ----
+    var catModalOverlay = document.getElementById('cat-modal-overlay');
+    var catModal = document.getElementById('cat-modal');
+    var catModalTitle = document.getElementById('cat-modal-title');
+    var catModalGrid = document.getElementById('cat-modal-grid');
+    var catModalProducts = []; // last-loaded products, so tapping one doesn't need a second fetch
+
+    async function openCategoryModal(categoryName) {
+        catModalTitle.textContent = categoryName;
+        catModalGrid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--warm-gray); font-size:13px; padding:20px 0;">Loading\u2026</p>';
+        catModalOverlay.classList.add('is-open');
+        catModal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+
+        try {
+            var res = await fetch(API_BASE + '/api/products?status=published&pageSize=50&category=' + encodeURIComponent(categoryName));
+            var data = await res.json();
+            catModalProducts = data.products || [];
+
+            if (!catModalProducts.length) {
+                catModalGrid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--warm-gray); font-size:13px; padding:20px 0;">Nothing in ' + escapeHtml(categoryName) + ' just yet \u2014 check back shortly.</p>';
+                return;
+            }
+
+            catModalGrid.innerHTML = catModalProducts.map(function (p) {
+                var photoHtml = (p.images && p.images.length) ? '<img src="' + API_BASE + p.images[0].url + '" alt="' + escapeHtml(p.title) + '">' : '';
+                return '<button type="button" class="cat-modal-item" data-id="' + p.id + '">' +
+                    '<div class="cat-modal-item-frame">' + photoHtml + '</div>' +
+                    '<p class="catalog-brand">' + escapeHtml(p.brand || '') + '</p>' +
+                    '<p class="serif">' + escapeHtml(p.title) + '</p>' +
+                    '<p class="price">' + formatPrice(p.price) + '</p>' +
+                '</button>';
+            }).join('');
+        } catch (err) {
+            catModalGrid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--warm-gray); font-size:13px;">Couldn\'t load this category \u2014 please try again.</p>';
+            console.error('Category modal load failed:', err);
+        }
+    }
+
+    function closeCategoryModal() {
+        catModalOverlay.classList.remove('is-open');
+        catModal.classList.remove('is-open');
+        document.body.style.overflow = '';
+    }
+    document.getElementById('cat-modal-close').addEventListener('click', closeCategoryModal);
+    catModalOverlay.addEventListener('click', closeCategoryModal);
+
+    catModalGrid.addEventListener('click', function (e) {
+        var item = e.target.closest('.cat-modal-item');
+        if (!item) return;
+        var product = catModalProducts.find(function (p) { return p.id === parseInt(item.dataset.id, 10); });
+        if (product) openProductDetail(product);
+    });
+
+    // ---- PRODUCT DETAIL MODAL ----
+    var pdOverlay = document.getElementById('pd-overlay');
+    var pdModal = document.getElementById('pd-modal');
+    var pdFrame = document.getElementById('pd-frame');
+    var pdBrand = document.getElementById('pd-brand');
+    var pdTitle = document.getElementById('pd-title');
+    var pdPrice = document.getElementById('pd-price');
+    var pdDescription = document.getElementById('pd-description');
+    var pdWishlistBtn = document.getElementById('pd-wishlist-btn');
+    var pdCartBtn = document.getElementById('pd-cart-btn');
+    var currentDetailProduct = null;
+
+    function openProductDetail(product) {
+        currentDetailProduct = product;
+        var photoHtml = (product.images && product.images.length) ? '<img src="' + API_BASE + product.images[0].url + '" alt="' + escapeHtml(product.title) + '">' : '';
+        pdFrame.innerHTML = photoHtml + '<button class="pd-close" id="pd-close" aria-label="Close">&times;</button>';
+        document.getElementById('pd-close').addEventListener('click', closeProductDetail);
+
+        pdBrand.textContent = product.brand || '';
+        pdTitle.textContent = product.title;
+        pdPrice.textContent = formatPrice(product.price);
+        pdDescription.textContent = product.description || '';
+        pdDescription.style.display = product.description ? '' : 'none';
+
+        var alreadyWishlisted = wishlistItems.some(function (it) { return it.name === product.title; });
+        pdWishlistBtn.textContent = alreadyWishlisted ? 'Saved to Wishlist' : 'Add to Wishlist';
+        pdWishlistBtn.classList.toggle('is-active', alreadyWishlisted);
+
+        pdOverlay.classList.add('is-open');
+        pdModal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductDetail() {
+        pdOverlay.classList.remove('is-open');
+        pdModal.classList.remove('is-open');
+        document.body.style.overflow = catModal.classList.contains('is-open') ? 'hidden' : '';
+    }
+    pdOverlay.addEventListener('click', closeProductDetail);
+
+    pdWishlistBtn.addEventListener('click', function () {
+        if (!currentDetailProduct) return;
+        var name = currentDetailProduct.title;
+        var alreadyIn = wishlistItems.some(function (it) { return it.name === name; });
+        if (alreadyIn) {
+            wishlistItems = wishlistItems.filter(function (it) { return it.name !== name; });
+            pdWishlistBtn.textContent = 'Add to Wishlist';
+            pdWishlistBtn.classList.remove('is-active');
+        } else {
+            wishlistItems.push({ name: name, brand: currentDetailProduct.brand || '', price: currentDetailProduct.price });
+            pdWishlistBtn.textContent = 'Saved to Wishlist';
+            pdWishlistBtn.classList.add('is-active');
+        }
+        updateWishlistCount();
+        renderWishlistModal();
+    });
+
+    pdCartBtn.addEventListener('click', function () {
+        if (!currentDetailProduct) return;
+        cartItems.push({ name: currentDetailProduct.title, brand: currentDetailProduct.brand || '', price: currentDetailProduct.price });
+        updateCartCount();
+        pdCartBtn.textContent = 'Added \u2713';
+        setTimeout(function () { pdCartBtn.textContent = 'Add to Cart'; }, 1200);
+    });
 
     // ---- WISHLIST MODAL ----
     var wishlistOverlay = document.getElementById('wishlist-overlay');
