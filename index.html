@@ -515,6 +515,11 @@
            scrim, refined type. Same video/scrim mechanics as before. */
         .lp-hero { position: relative; height: 68vh; min-height: 460px; display: flex; align-items: flex-end; overflow: hidden; background: #141210; }
         .lp-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+        .lp-hero-slideshow { position: absolute; inset: 0; }
+        .lp-hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 0.9s ease; }
+        .lp-hero-slide.is-active { opacity: 1; }
+        .lp-hero-flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 3; transition: opacity 0.1s ease; }
+        .lp-hero-flash.is-flashing { opacity: 0.32; transition: opacity 0.06s ease; }
         .lp-hero-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(var(--hero-scrim-rgb),0.72), rgba(var(--hero-scrim-rgb),0.05) 60%); }
         .lp-hero-content { position: relative; padding: 0 6vw 84px; color: #fff; max-width: 640px; margin: 0 auto; text-align: center; }
         .lp-hero-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 18px; font-weight: 500; }
@@ -596,6 +601,8 @@
                  shows as a plain dark band — nothing breaks either way. -->
             <!-- <source src="studio-reel.mp4" type="video/mp4"> -->
         </video>
+        <div class="lp-hero-slideshow" id="lp-hero-slideshow" style="display:none;"></div>
+        <div class="lp-hero-flash" id="lp-hero-flash"></div>
         <div class="lp-hero-scrim"></div>
         <div class="lp-hero-content">
             <div class="lp-hero-eyebrow">Libertypictures</div>
@@ -862,12 +869,58 @@
 
     <!-- JAVASCRIPT FOR CART & PAYSTACK INTEGRATION -->
     <script>
-        // HERO VIDEO + LOGO — loaded from Settings, same pattern as
-        // Packages. Previously these only worked with files manually
-        // added to the GitHub repo — now they actually read what's
-        // uploaded in the dashboard.
+        // HERO VIDEO + SLIDESHOW + LOGO — loaded from Settings. Two
+        // completely separate rendering paths based on hero_mode: the
+        // video path never runs slideshow code, and the slideshow path
+        // never touches the video element or its properties (autoplay,
+        // loop, muted) — each mode only ever does its own thing.
         (function () {
             var API_BASE = 'https://liberty-booking-api.visualsliberty.workers.dev';
+
+            function renderVideo(s) {
+                if (!s.hero_video_url) return; // nothing uploaded yet — plain dark band is the correct fallback
+                var oldVideo = document.getElementById('lp-hero-video');
+                var newVideo = oldVideo.cloneNode(false);
+                newVideo.muted = true; // explicit property, not just the cloned attribute — autoplay strictly requires this and attribute-cloning can be inconsistent
+                newVideo.innerHTML = '<source src="' + API_BASE + s.hero_video_url + '" type="video/mp4">';
+                oldVideo.parentNode.replaceChild(newVideo, oldVideo);
+                newVideo.play().catch(function (err) { console.error('Hero video could not autoplay:', err.message); });
+            }
+
+            function renderSlideshow() {
+                document.getElementById('lp-hero-video').style.display = 'none';
+                var container = document.getElementById('lp-hero-slideshow');
+                var flash = document.getElementById('lp-hero-flash');
+
+                fetch(API_BASE + '/api/hero-images')
+                    .then(function (res) { return res.json(); })
+                    .then(function (data) {
+                        var images = data.images || [];
+                        if (!images.length) return; // nothing uploaded yet — plain dark band is the correct fallback, same as an empty video
+
+                        container.style.display = 'block';
+                        container.innerHTML = images.map(function (img, i) {
+                            return '<div class="lp-hero-slide' + (i === 0 ? ' is-active' : '') + '" style="background-image:url(' + API_BASE + img.imageUrl + ')"></div>';
+                        }).join('');
+
+                        if (images.length < 2) return; // single photo — nothing to rotate between
+                        var slides = container.querySelectorAll('.lp-hero-slide');
+                        var current = 0;
+                        setInterval(function () {
+                            var next = (current + 1) % slides.length;
+                            // Brief flash right at the crossfade midpoint — a
+                            // restrained nod to a camera flash, not a literal
+                            // one, so it stays premium rather than gimmicky.
+                            flash.classList.add('is-flashing');
+                            setTimeout(function () { flash.classList.remove('is-flashing'); }, 90);
+                            slides[current].classList.remove('is-active');
+                            slides[next].classList.add('is-active');
+                            current = next;
+                        }, 2000);
+                    })
+                    .catch(function (err) { console.error('Could not load hero slideshow:', err); });
+            }
+
             fetch(API_BASE + '/api/settings')
                 .then(function (res) { return res.json(); })
                 .then(function (data) {
@@ -878,13 +931,11 @@
                         if (logoImg) logoImg.src = API_BASE + s.logo_url;
                     }
 
-                    if (!s.hero_video_url) return; // nothing uploaded yet — plain dark band is the correct fallback
-                    var oldVideo = document.getElementById('lp-hero-video');
-                    var newVideo = oldVideo.cloneNode(false);
-                    newVideo.muted = true; // explicit property, not just the cloned attribute — autoplay strictly requires this and attribute-cloning can be inconsistent
-                    newVideo.innerHTML = '<source src="' + API_BASE + s.hero_video_url + '" type="video/mp4">';
-                    oldVideo.parentNode.replaceChild(newVideo, oldVideo);
-                    newVideo.play().catch(function (err) { console.error('Hero video could not autoplay:', err.message); });
+                    if (s.hero_mode === 'slideshow') {
+                        renderSlideshow();
+                    } else {
+                        renderVideo(s);
+                    }
                 })
                 .catch(function (err) { console.error('Could not load hero video/logo from Settings:', err); });
         })();
